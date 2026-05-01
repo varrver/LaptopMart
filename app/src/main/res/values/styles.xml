@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Theme.LaptopMart" parent="Theme.Material3.Light.NoActionBar">
+        <item name="bottomNavigationStyle">@style/Widget.LaptopMart.BottomNavigationView</item>
+        <item name="textInputStyle">@style/Widget.LaptopMart.TextInputLayout.OutlinedBox</item>
+        <item name="materialButtonOutlinedStyle">@style/Widget.LaptopMart.Button.OutlinedButton
+        </item>
+        <item name="materialButtonStyle">@style/Widget.LaptopMart.Button</item>
+    </style>
+
+    <style name="Widget.LaptopMart.BottomNavigationView" parent="Widget.Material3.BottomNavigationView">
+        <item name="materialThemeOverlay">@style/ThemeOverlay.LaptopMart.BottomNavigationView</item>
+    </style>
+
+    <style name="Widget.LaptopMart.TextInputLayout.OutlinedBox" parent="Widget.Material3.TextInputLayout.OutlinedBox">
+        <item name="materialThemeOverlay">
+            @style/ThemeOverlay.LaptopMart.TextInputLayout.OutlinedBox
+        </item>
+        <item name="shapeAppearance">@style/ShapeAppearance.Material3.Corner.Full
+        </item>
+    </style>
+
+    <style name="Widget.LaptopMart.Button" parent="Widget.Material3.Button">
+        <item name="android:padding">16dp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">16sp</item>
+        <item name="materialThemeOverlay">@style/ThemeOverlay.LaptopMart.Button
+        </item>
+        <item name="buttonStyle">@style/Widget.Material3.Button</item>
+    </style>
+
+    <style name="Widget.LaptopMart.Button.OutlinedButton" parent="Widget.Material3.Button.OutlinedButton">
+        <item name="materialThemeOverlay">@style/ThemeOverlay.LaptopMart.Button.OutlinedButton
+        </item>
+        <item name="strokeWidth">2dp</item>
+        <item name="android:padding">16dp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="ThemeOverlay.LaptopMart.BottomNavigationView" parent="">
+        <item name="colorOnSecondaryContainer">@color/colorPrimary</item>
+        <item name="colorSurfaceContainer">@color/winter_white</item>
+        <item name="colorSecondaryContainer">@color/colorPrimaryDark</item>
+        <item name="elevation">16dp</item>
+    </style>
+
+    <style name="ThemeOverlay.LaptopMart.TextInputLayout.OutlinedBox" parent="">
+        <item name="colorOutline">@color/classic_french_gray</item>
+        <item name="colorOnSurfaceVariant">@color/classic_french_gray</item>
+        <item name="colorPrimary">@color/blue_ribbon</item>
+        <item name="colorOnSurface">@color/navy_blue</item>
+        <item name="editTextStyle">@style/Widget.Material3.TextInputEditText.OutlinedBox</item>
+    </style>
+
+    <style name="ThemeOverlay.LaptopMart.Button" parent="ThemeOverlay.Material3.Button">
+        <item name="colorContainer">@color/blue_ribbon</item>
+        <item name="colorOnContainer">@color/winter_white</item>
+    </style>
+
+    <style name="ThemeOverlay.LaptopMart.Button.OutlinedButton" parent="ThemeOverlay.Material3.Button.TextButton">
+        <item name="colorOnContainer">@color/blue_ribbon</item>
+        <item name="colorOutline">@color/blue_ribbon</item>
+    </style>
+
+</resources>

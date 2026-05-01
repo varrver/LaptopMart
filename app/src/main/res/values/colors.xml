@@ -2,4 +2,17 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <color name="colorPrimary">#FF286398</color>
+    <color name="colorPrimaryDark">#b3e7ff</color>
+    <color name="colorAccent">#FF6ECAF6</color>
+
+    <color name="winter_white">#FFFAFDFE</color>
+    <color name="classic_french_gray">#FF9AA5AA</color>
+    <color name="navy_blue">#FF243C4F</color>
+    <color name="blue_ribbon">#FF286398</color>
+    <color name="blue_belle">#FF6ECAF6</color>
+
+    <color name="gray">#FFC5C6C8</color>
+    <color name="mustard_yellow">#FFDEB342</color>
 </resources>
