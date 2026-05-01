@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "717252671677",
+    "project_id": "laptopmart-de8e2",
+    "storage_bucket": "laptopmart-de8e2.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:717252671677:android:20c425a8bf233b84059fd4",
+        "android_client_info": {
+          "package_name": "com.example.laptopmart"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBVSbjlVabxXwNkz5iGxnf_7FonhFyTSuI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
