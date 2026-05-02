@@ -17,4 +17,10 @@
     <string name="banner">Banner</string>
     <string name="profile">Profil</string>
     <string name="email_phone">Email atau Nomor Telepon</string>
+    <string name="brand">Brand</string>
+    <string name="description">Description</string>
+    <string name="price">Price</string>
+    <string name="stock">Stock</string>
+    <string name="save">Save</string>
+    <string name="image">Image</string>
 </resources>

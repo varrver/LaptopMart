@@ -1,18 +1,18 @@
 package com.example.laptopmart.admin;
 
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 
-import com.example.laptopmart.auth.LoginActivity;
+import com.example.laptopmart.R;
 import com.example.laptopmart.databinding.ActivityDashboardBinding;
-import com.google.firebase.auth.FirebaseAuth;
+import com.example.laptopmart.laptop.ListLaptopFragment;
+import com.example.laptopmart.profile.ProfileFragment;
 
 public class DashboardActivity extends AppCompatActivity {
 
     private ActivityDashboardBinding binding;
-    private FirebaseAuth auth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,24 +20,33 @@ public class DashboardActivity extends AppCompatActivity {
         binding = ActivityDashboardBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        auth = FirebaseAuth.getInstance();
+        initBottomNavigationBar();
 
-        initButton();
+        if (savedInstanceState == null) {
+            loadFragment(new ListLaptopFragment());
+            binding.bottomNavigationAdmin.setSelectedItemId(R.id.item_list);
+        }
     }
 
-    private void initButton() {
-        binding.btnLogout.setOnClickListener(v -> logoutAccount());
+    private void initBottomNavigationBar() {
+        binding.bottomNavigationAdmin.setOnItemSelectedListener(item -> {
+            int itemId = item.getItemId();
+            if (itemId == R.id.item_list) {
+                loadFragment(new ListLaptopFragment());
+                return true;
+            } else if (itemId == R.id.item_profile) {
+                loadFragment(new ProfileFragment());
+                return true;
+            }
+            return true;
+        });
     }
 
-    private void logoutAccount() {
-        auth.signOut();
-        goToLogin();
-    }
-
-    private void goToLogin() {
-        Intent intent = new Intent(this, LoginActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        startActivity(intent);
-        finish();
+    private void loadFragment(Fragment fragment) {
+        if (fragment != null)
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.fragment_container_admin, fragment)
+                    .commit();
     }
 }

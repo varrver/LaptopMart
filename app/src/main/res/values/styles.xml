@@ -4,9 +4,11 @@
     <style name="Theme.LaptopMart" parent="Theme.Material3.Light.NoActionBar">
         <item name="bottomNavigationStyle">@style/Widget.LaptopMart.BottomNavigationView</item>
         <item name="textInputStyle">@style/Widget.LaptopMart.TextInputLayout.OutlinedBox</item>
+        <item name="materialButtonStyle">@style/Widget.LaptopMart.Button</item>
         <item name="materialButtonOutlinedStyle">@style/Widget.LaptopMart.Button.OutlinedButton
         </item>
-        <item name="materialButtonStyle">@style/Widget.LaptopMart.Button</item>
+        <item name="floatingActionButtonStyle">@style/Widget.LaptopMart.FloatingActionButton
+        </item>
     </style>
 
     <style name="Widget.LaptopMart.BottomNavigationView" parent="Widget.Material3.BottomNavigationView">
@@ -39,10 +41,18 @@
         <item name="android:textSize">16sp</item>
     </style>
 
+    <style name="Widget.LaptopMart.FloatingActionButton" parent="Widget.Material3.FloatingActionButton.Primary">
+        <item name="materialThemeOverlay">@style/ThemeOverlay.LaptopMart.FloatingActionButton
+        </item>
+        <item name="floatingActionButtonStyle">
+            @style/Widget.Material3.FloatingActionButton.Primary
+        </item>
+    </style>
+
     <style name="ThemeOverlay.LaptopMart.BottomNavigationView" parent="">
         <item name="colorOnSecondaryContainer">@color/colorPrimary</item>
-        <item name="colorSurfaceContainer">@color/winter_white</item>
-        <item name="colorSecondaryContainer">@color/colorPrimaryDark</item>
+        <item name="colorSecondaryContainer">@color/sky_mist</item>
+        <item name="colorSurfaceContainer">@color/minted_aqua</item>
         <item name="elevation">16dp</item>
     </style>
 
@@ -62,6 +72,11 @@
     <style name="ThemeOverlay.LaptopMart.Button.OutlinedButton" parent="ThemeOverlay.Material3.Button.TextButton">
         <item name="colorOnContainer">@color/blue_ribbon</item>
         <item name="colorOutline">@color/blue_ribbon</item>
+    </style>
+
+    <style name="ThemeOverlay.LaptopMart.FloatingActionButton" parent="">
+        <item name="colorContainer">@color/blue_belle</item>
+        <item name="colorOnContainer">@color/blue_ribbon</item>
     </style>
 
 </resources>
