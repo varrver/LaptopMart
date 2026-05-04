@@ -2,25 +2,26 @@
     <string name="app_name">LaptopMart</string>
     <string name="email">Email</string>
     <string name="password">Password</string>
-    <string name="phone">Phone</string>
-    <string name="name">Name</string>
+    <string name="phone">Nomor Telepon</string>
+    <string name="name">Nama</string>
     <string name="login">Login</string>
     <string name="register">Register</string>
     <string name="create_account">Buat Akun</string>
     <string name="have_account">Sudah punya akun?</string>
     <string name="login_account">Login Akun</string>
     <string name="not_have_account">Belum punya akun?</string>
-    <string name="process">Memproses...</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="process">Memproses…</string>
     <string name="logout">Logout</string>
     <string name="banner">Banner</string>
     <string name="profile">Profil</string>
     <string name="email_phone">Email atau Nomor Telepon</string>
     <string name="brand">Brand</string>
-    <string name="description">Description</string>
-    <string name="price">Price</string>
-    <string name="stock">Stock</string>
-    <string name="save">Save</string>
-    <string name="image">Image</string>
+    <string name="description">Deskripsi</string>
+    <string name="price">Harga</string>
+    <string name="stock">Stok</string>
+    <string name="save">Simpan</string>
+    <string name="image">Pilih gambar</string>
+    <string name="laptop">Laptop</string>
+    <string name="update">Update Laptop</string>
+    <string name="delete">Hapus</string>
 </resources>

@@ -9,6 +9,7 @@
         </item>
         <item name="floatingActionButtonStyle">@style/Widget.LaptopMart.FloatingActionButton
         </item>
+        <item name="materialDividerStyle">@style/ThemeOverlay.LaptopMart.MaterialDivider</item>
     </style>
 
     <style name="Widget.LaptopMart.BottomNavigationView" parent="Widget.Material3.BottomNavigationView">
@@ -79,4 +80,7 @@
         <item name="colorOnContainer">@color/blue_ribbon</item>
     </style>
 
+    <style name="ThemeOverlay.LaptopMart.MaterialDivider" parent="">
+        <item name="dividerColor">@color/classic_french_gray</item>
+    </style>
 </resources>
