@@ -6,26 +6,29 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/winter_white"
-    tools:context=".laptop.DetailLaptopActivity">
+    tools:context=".order.CheckoutActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/navigation_header_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/winter_white"
+        android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <ImageView
-            android:id="@+id/iv_back"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginHorizontal="16dp"
             android:layout_marginTop="48dp"
             android:layout_marginBottom="16dp"
-            android:contentDescription="Kembali"
-            android:src="@drawable/ic_back"
+            android:text="@string/checkout"
+            android:textColor="@color/navy_blue"
+            android:textSize="32sp"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -38,92 +41,100 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <ScrollView
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@id/btn_container"
+        app:layout_constraintBottom_toTopOf="@id/navigation_bottom_container"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/navigation_header_container"
-        app:layout_constraintVertical_bias="0.0">
+        app:layout_constraintTop_toBottomOf="@id/navigation_header_container">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <ImageView
-                android:id="@+id/iv_laptop_image"
-                android:layout_width="match_parent"
-                android:layout_height="256dp"
-                android:scaleType="fitCenter"
-                tools:src="@tools:sample/backgrounds/scenic" />
-
             <TextView
-                android:id="@+id/tv_laptop_brand"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="16dp"
                 android:layout_marginTop="16dp"
-                android:textColor="@color/navy_blue"
-                android:textSize="16sp"
-                tools:text="Acer" />
-
-            <TextView
-                android:id="@+id/tv_laptop_name"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="16dp"
-                android:layout_marginTop="8dp"
+                android:text="Ringkasan Pesanan"
                 android:textColor="@color/navy_blue"
                 android:textSize="24sp"
-                tools:text="Acer Nitro 5" />
+                android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/tv_laptop_price"
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_checkout_items"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:itemCount="2"
+                tools:listitem="@layout/view_holder_cart" /> <!-- Use your cart XML name here -->
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="16dp"
                 android:layout_marginTop="16dp"
-                android:textColor="@color/navy_blue"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                tools:text="Rp 15.000.000" />
+                android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/tv_laptop_stock"
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Total Pembayaran:"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/tv_checkout_total"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/navy_blue"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    tools:text="Rp 15.000.000" />
+            </LinearLayout>
+
+            <com.google.android.material.divider.MaterialDivider
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="16dp"
-                android:layout_marginTop="8dp"
-                android:textColor="@color/navy_blue"
-                android:textSize="16sp"
-                tools:text="10" />
+                android:layout_height="4dp"
+                android:layout_marginTop="16dp" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="16dp"
                 android:layout_marginTop="16dp"
-                android:text="Deskripsi"
-                android:textSize="20sp" />
+                android:text="Informasi Pengiriman"
+                android:textColor="@color/navy_blue"
+                android:textSize="24sp"
+                android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/tv_laptop_description"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/til_address"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="16dp"
-                android:layout_marginTop="8dp"
-                android:textSize="16sp"
-                tools:text="@tools:sample/lorem" />
+                android:layout_marginTop="16dp"
+                android:hint="Alamat Lengkap"
+                app:startIconDrawable="@drawable/ic_home">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_address"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textMultiLine" />
+
+            </com.google.android.material.textfield.TextInputLayout>
 
         </LinearLayout>
 
-    </ScrollView>
+    </androidx.core.widget.NestedScrollView>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/btn_container"
+        android:id="@+id/navigation_bottom_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/winter_white"
@@ -139,34 +150,20 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <LinearLayout
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_checkout"
+            style="@style/Widget.LaptopMart.Button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:padding="16dp"
+            android:layout_margin="16dp"
+            android:gravity="center"
+            android:text="@string/checkout"
+            android:textColor="@color/winter_white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toTopOf="parent" />
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btn_cart"
-                style="@style/Widget.LaptopMart.Button"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/cart" />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btn_buy"
-                style="@style/Widget.LaptopMart.Button.OutlinedButton"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_weight="1"
-                android:text="@string/buy" />
-
-        </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

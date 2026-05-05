@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.example.laptopmart.databinding.ViewholderLaptopBinding;
+import com.example.laptopmart.databinding.ViewHolderLaptopBinding;
 import com.example.laptopmart.model.Laptop;
 
 import java.text.NumberFormat;
@@ -46,7 +46,7 @@ public class LaptopAdapter extends ListAdapter<Laptop, LaptopAdapter.LaptopViewH
     @NonNull
     @Override
     public LaptopViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        ViewholderLaptopBinding binding = ViewholderLaptopBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
+        ViewHolderLaptopBinding binding = ViewHolderLaptopBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
         return new LaptopViewHolder(binding);
     }
 
@@ -57,9 +57,9 @@ public class LaptopAdapter extends ListAdapter<Laptop, LaptopAdapter.LaptopViewH
     }
 
     class LaptopViewHolder extends RecyclerView.ViewHolder {
-        private final ViewholderLaptopBinding binding;
+        private final ViewHolderLaptopBinding binding;
 
-        public LaptopViewHolder(ViewholderLaptopBinding binding) {
+        public LaptopViewHolder(ViewHolderLaptopBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
 

@@ -24,4 +24,10 @@
     <string name="laptop">Laptop</string>
     <string name="update">Update Laptop</string>
     <string name="delete">Hapus</string>
+    <string name="cart">Keranjang</string>
+    <string name="buy">Beli</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="search">Cari</string>
+    <string name="checkout">Checkout</string>
 </resources>

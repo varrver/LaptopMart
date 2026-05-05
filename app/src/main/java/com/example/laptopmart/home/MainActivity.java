@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import com.example.laptopmart.R;
+import com.example.laptopmart.cart.CartFragment;
 import com.example.laptopmart.databinding.ActivityMainBinding;
 import com.example.laptopmart.profile.ProfileFragment;
 import com.example.laptopmart.search.SearchFragment;
@@ -24,20 +25,23 @@ public class MainActivity extends AppCompatActivity {
 
         if (savedInstanceState == null) {
             loadFragment(new HomeFragment());
-            binding.bottomNavigationBar.setSelectedItemId(R.id.itemHome);
+            binding.bottomNavigationBar.setSelectedItemId(R.id.item_home);
         }
     }
 
     private void initBottomNavigationBar() {
         binding.bottomNavigationBar.setOnItemSelectedListener(item -> {
             int itemId = item.getItemId();
-            if (itemId == R.id.itemHome) {
+            if (itemId == R.id.item_home) {
                 loadFragment(new HomeFragment());
                 return true;
-            } else if (itemId == R.id.itemSearch) {
+            } else if (itemId == R.id.item_cart) {
+                loadFragment(new CartFragment());
+                return true;
+            } else if (itemId == R.id.item_search) {
                 loadFragment(new SearchFragment());
                 return true;
-            } else if (itemId == R.id.itemProfile) {
+            } else if (itemId == R.id.item_profile) {
                 loadFragment(new ProfileFragment());
                 return true;
             }
