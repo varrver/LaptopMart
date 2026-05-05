@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment;
 import com.example.laptopmart.R;
 import com.example.laptopmart.databinding.ActivityDashboardBinding;
 import com.example.laptopmart.laptop.ListLaptopFragment;
+import com.example.laptopmart.order.AdminOrderFragment;
 import com.example.laptopmart.profile.ProfileFragment;
 
 public class DashboardActivity extends AppCompatActivity {
@@ -33,6 +34,9 @@ public class DashboardActivity extends AppCompatActivity {
             int itemId = item.getItemId();
             if (itemId == R.id.item_list) {
                 loadFragment(new ListLaptopFragment());
+                return true;
+            } else if (itemId == R.id.item_orders) {
+                loadFragment(new AdminOrderFragment());
                 return true;
             } else if (itemId == R.id.item_profile) {
                 loadFragment(new ProfileFragment());

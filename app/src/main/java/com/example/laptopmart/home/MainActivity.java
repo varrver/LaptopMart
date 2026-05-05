@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment;
 import com.example.laptopmart.R;
 import com.example.laptopmart.cart.CartFragment;
 import com.example.laptopmart.databinding.ActivityMainBinding;
+import com.example.laptopmart.order.UserOrderFragment;
 import com.example.laptopmart.profile.ProfileFragment;
 import com.example.laptopmart.search.SearchFragment;
 
@@ -35,11 +36,14 @@ public class MainActivity extends AppCompatActivity {
             if (itemId == R.id.item_home) {
                 loadFragment(new HomeFragment());
                 return true;
+            } else if (itemId == R.id.item_search) {
+                loadFragment(new SearchFragment());
+                return true;
             } else if (itemId == R.id.item_cart) {
                 loadFragment(new CartFragment());
                 return true;
-            } else if (itemId == R.id.item_search) {
-                loadFragment(new SearchFragment());
+            } else if (itemId == R.id.item_orders) {
+                loadFragment(new UserOrderFragment());
                 return true;
             } else if (itemId == R.id.item_profile) {
                 loadFragment(new ProfileFragment());
