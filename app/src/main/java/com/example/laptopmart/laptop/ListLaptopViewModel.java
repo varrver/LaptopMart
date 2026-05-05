@@ -34,6 +34,11 @@ public class ListLaptopViewModel extends ViewModel {
             }
 
             @Override
+            public void onSuccess(String message) {
+
+            }
+
+            @Override
             public void onError(String error) {
                 errorMessage.setValue(error);
             }

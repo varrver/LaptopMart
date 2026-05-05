@@ -29,6 +29,8 @@ public class LaptopRepository {
     public interface LaptopListCallback {
         void onDataChange(List<Laptop> laptops);
 
+        void onSuccess(String message);
+
         void onError(String errorMessage);
     }
 
