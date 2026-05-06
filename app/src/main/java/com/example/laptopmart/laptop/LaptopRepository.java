@@ -40,6 +40,12 @@ public class LaptopRepository {
         void onError(String errorMessage);
     }
 
+    public interface BannerListCallback {
+        void onDataChange(List<String> bannerUrls);
+
+        void onError(String errorMessage);
+    }
+
     public void uploadImageAndSaveLaptop(Uri imageUri, Laptop laptop, LaptopCallBack callBack) {
         String cleanName = laptop.getName().replaceAll("[^a-zA-Z0-9]", "_").toLowerCase();
         String customFileName = cleanName + "_" + System.currentTimeMillis();
@@ -130,5 +136,25 @@ public class LaptopRepository {
                     }
                 })
                 .addOnFailureListener(e -> callback.onError("Gagal mengambil data: " + e.getMessage()));
+    }
+
+    public void listenForBanners(BannerListCallback callback) {
+        firestore.collection("banners").addSnapshotListener((value, error) -> {
+            if (error != null) {
+                callback.onError("Gagal mengambil banner: " + error.getMessage());
+                return;
+            }
+            if (value != null) {
+                List<String> urls = new ArrayList<>();
+                for (QueryDocumentSnapshot doc : value) {
+                    // Change "imageUrl" if your field name is different in Firestore!
+                    String url = doc.getString("url");
+                    if (url != null) {
+                        urls.add(url);
+                    }
+                }
+                callback.onDataChange(urls);
+            }
+        });
     }
 }

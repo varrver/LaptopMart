@@ -10,16 +10,22 @@ import java.util.List;
 
 public class ListLaptopViewModel extends ViewModel {
     private final MutableLiveData<List<Laptop>> laptopsLiveData = new MutableLiveData<>();
+    private final MutableLiveData<List<String>> bannersLiveData = new MutableLiveData<>();
     private final MutableLiveData<String> errorMessage = new MutableLiveData<>();
     private final LaptopRepository repository;
 
     public ListLaptopViewModel() {
         repository = new LaptopRepository();
         fetchLaptop();
+        fetchBanners();
     }
 
     public LiveData<List<Laptop>> getLaptopsLiveData() {
         return laptopsLiveData;
+    }
+
+    public LiveData<List<String>> getBannersLiveData() {
+        return bannersLiveData;
     }
 
     public LiveData<String> getErrorMessage() {
@@ -36,6 +42,20 @@ public class ListLaptopViewModel extends ViewModel {
             @Override
             public void onSuccess(String message) {
 
+            }
+
+            @Override
+            public void onError(String error) {
+                errorMessage.setValue(error);
+            }
+        });
+    }
+
+    private void fetchBanners() {
+        repository.listenForBanners(new LaptopRepository.BannerListCallback() {
+            @Override
+            public void onDataChange(List<String> bannerUrls) {
+                bannersLiveData.setValue(bannerUrls);
             }
 
             @Override
