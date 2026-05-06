@@ -34,6 +34,12 @@ public class LaptopRepository {
         void onError(String errorMessage);
     }
 
+    public interface SingleLaptopCallback {
+        void onSuccess(Laptop laptop);
+
+        void onError(String errorMessage);
+    }
+
     public void uploadImageAndSaveLaptop(Uri imageUri, Laptop laptop, LaptopCallBack callBack) {
         String cleanName = laptop.getName().replaceAll("[^a-zA-Z0-9]", "_").toLowerCase();
         String customFileName = cleanName + "_" + System.currentTimeMillis();
@@ -111,5 +117,18 @@ public class LaptopRepository {
                 .delete()
                 .addOnSuccessListener(aVoid -> callBack.onSuccess("Berhapus menghapus"))
                 .addOnFailureListener(e -> callBack.onError("Gagal meyimpan laptop!"));
+    }
+
+    public void getLaptopById(String laptopId, SingleLaptopCallback callback) {
+        firestore.collection("laptops").document(laptopId).get()
+                .addOnSuccessListener(documentSnapshot -> {
+                    if (documentSnapshot.exists()) {
+                        Laptop laptop = documentSnapshot.toObject(Laptop.class);
+                        callback.onSuccess(laptop);
+                    } else {
+                        callback.onError("Laptop tidak ditemukan di database!");
+                    }
+                })
+                .addOnFailureListener(e -> callback.onError("Gagal mengambil data: " + e.getMessage()));
     }
 }

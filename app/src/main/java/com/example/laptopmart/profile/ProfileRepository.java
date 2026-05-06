@@ -20,6 +20,12 @@ public class ProfileRepository {
         void onError(String errorMessage);
     }
 
+    public interface AddressCallback {
+        void onSuccess(String message);
+
+        void onError(String errorMessage);
+    }
+
     public void getUserProfile(ProfileCallback callback) {
         if (auth.getCurrentUser() == null) {
             callback.onError("User belum login");
@@ -43,5 +49,15 @@ public class ProfileRepository {
 
     public void logout() {
         auth.signOut(); // This tells Firebase to clear the current session!
+    }
+
+    public void updateAddress(String newAddress, AddressCallback callback) {
+        if (auth.getCurrentUser() == null) return;
+        String userId = auth.getCurrentUser().getUid();
+
+        firestore.collection("users").document(userId)
+                .update("address", newAddress)
+                .addOnSuccessListener(aVoid -> callback.onSuccess("Alamat berhasil diperbarui!"))
+                .addOnFailureListener(e -> callback.onError("Gagal memperbarui alamat!"));
     }
 }

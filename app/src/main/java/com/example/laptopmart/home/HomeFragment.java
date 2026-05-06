@@ -36,15 +36,7 @@ public class HomeFragment extends Fragment {
     private void setupRecyclerView() {
         adapter = new LaptopAdapter(laptop -> {
             Intent intent = new Intent(requireContext(), DetailLaptopActivity.class);
-
             intent.putExtra("LAPTOP_ID", laptop.getId());
-            intent.putExtra("LAPTOP_NAME", laptop.getName());
-            intent.putExtra("LAPTOP_BRAND", laptop.getBrand());
-            intent.putExtra("LAPTOP_DESCRIPTION", laptop.getDescription());
-            intent.putExtra("LAPTOP_PRICE", laptop.getPrice());
-            intent.putExtra("LAPTOP_STOCK", laptop.getStock());
-            intent.putExtra("LAPTOP_IMAGE", laptop.getImageUrl());
-
             startActivity(intent);
         });
         binding.rvUserLaptops.setAdapter(adapter);

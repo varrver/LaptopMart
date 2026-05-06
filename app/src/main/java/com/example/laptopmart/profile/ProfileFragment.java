@@ -43,7 +43,13 @@ public class ProfileFragment extends Fragment {
                     String formattedRole = role.substring(0, 1).toUpperCase() + role.substring(1);
                     binding.tvProfileRole.setText(formattedRole);
                 }
+                if (profile.getAddress() != null)
+                    binding.etProfileAddress.setText(profile.getAddress());
             }
+        });
+
+        viewModel.getSuccessMessage().observe(getViewLifecycleOwner(), msg -> {
+            if (msg != null) showToast(msg);
         });
 
         viewModel.getErrorMessage().observe(getViewLifecycleOwner(), message -> {
@@ -54,6 +60,14 @@ public class ProfileFragment extends Fragment {
     }
 
     private void initButton() {
+        binding.btnSaveAddress.setOnClickListener(v -> {
+            String address = binding.etProfileAddress.getText().toString().trim();
+            if (address.isEmpty()) {
+                showToast("Alamat tidak boleh kosong!");
+                return;
+            }
+            viewModel.updateAddress(address);
+        });
         binding.btnLogout.setOnClickListener(v -> {
             // 1. Tell ViewModel to clear the Firebase session
             viewModel.logout();
@@ -63,5 +77,9 @@ public class ProfileFragment extends Fragment {
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
         });
+    }
+
+    private void showToast(String message) {
+        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show();
     }
 }

@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.laptopmart.databinding.FragmentCartBinding;
+import com.example.laptopmart.laptop.DetailLaptopActivity;
 import com.example.laptopmart.model.CartItem;
 import com.example.laptopmart.order.CheckoutActivity;
 
@@ -41,7 +42,10 @@ public class CartFragment extends Fragment {
         adapter = new CartAdapter(new CartAdapter.OnCartClickListener() {
             @Override
             public void onCartClick(CartItem cartItem) {
-
+                Intent intent = new Intent(requireContext(), DetailLaptopActivity.class);
+                // ALL WE NEED TO PASS IS THE ID! The Activity will do the rest!
+                intent.putExtra("LAPTOP_ID", cartItem.getLaptopId());
+                startActivity(intent);
             }
 
             @Override

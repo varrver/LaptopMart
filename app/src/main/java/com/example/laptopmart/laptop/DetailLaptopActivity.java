@@ -1,5 +1,6 @@
 package com.example.laptopmart.laptop;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
 
@@ -9,6 +10,8 @@ import androidx.lifecycle.ViewModelProvider;
 import com.bumptech.glide.Glide;
 import com.example.laptopmart.R;
 import com.example.laptopmart.databinding.ActivityDetailLaptopBinding;
+import com.example.laptopmart.model.CartItem;
+import com.example.laptopmart.order.CheckoutActivity;
 
 import java.text.NumberFormat;
 import java.util.Locale;
@@ -30,8 +33,8 @@ public class DetailLaptopActivity extends AppCompatActivity {
         viewModel = new ViewModelProvider(this).get(DetailLaptopViewModel.class);
 
         observeViewModel();
-        initButton();
         initLaptop();
+        initButton();
     }
 
     private void observeViewModel() {
@@ -44,32 +47,67 @@ public class DetailLaptopActivity extends AppCompatActivity {
             }
         });
         viewModel.getIsLoading().observe(this, this::setLoadingState);
-    }
+        viewModel.getLaptopLiveData().observe(this, laptop -> {
+            if (laptop != null) {
+                // Save these to the class variables so the "Add to Cart" button still works!
+                laptopName = laptop.getName();
+                laptopImageUrl = laptop.getImageUrl();
+                laptopPrice = laptop.getPrice();
 
-    private void initButton() {
-        binding.ivBack.setOnClickListener(v -> finish());
-        binding.btnCart.setOnClickListener(v -> viewModel.saveCart("", laptopId, laptopName, laptopImageUrl, laptopPrice, 0));
+                NumberFormat formatRupiah = NumberFormat.getCurrencyInstance(new Locale("id", "ID"));
+                String formattedPrice = formatRupiah.format(laptopPrice);
+
+                binding.tvLaptopName.setText(laptopName);
+                binding.tvLaptopBrand.setText(laptop.getBrand());
+                binding.tvLaptopDescription.setText(laptop.getDescription());
+                binding.tvLaptopPrice.setText(formattedPrice);
+                binding.tvLaptopStock.setText("Stok: " + laptop.getStock());
+
+                Glide.with(this).load(laptopImageUrl).into(binding.ivLaptopImage);
+            }
+        });
     }
 
     private void initLaptop() {
         laptopId = getIntent().getStringExtra("LAPTOP_ID");
-        laptopName = getIntent().getStringExtra("LAPTOP_NAME");
-        String brand = getIntent().getStringExtra("LAPTOP_BRAND");
-        String description = getIntent().getStringExtra("LAPTOP_DESCRIPTION");
-        laptopPrice = getIntent().getDoubleExtra("LAPTOP_PRICE", 0.0);
-        int stock = getIntent().getIntExtra("LAPTOP_STOCK", 0);
-        laptopImageUrl = getIntent().getStringExtra("LAPTOP_IMAGE");
+        viewModel.loadLaptopDetails(laptopId);
+    }
 
-        NumberFormat formatRupiah = NumberFormat.getCurrencyInstance(new Locale("id", "ID"));
-        String formattedPrice = formatRupiah.format(laptopPrice);
+    private void initButton() {
+        binding.ivBack.setOnClickListener(v -> finish());
+        binding.btnCart.setOnClickListener(v -> {
+            if (laptopName != null) {
+                viewModel.saveCart("", laptopId, laptopName, laptopImageUrl, laptopPrice, 0);
+            }
+        });
+        binding.btnBuy.setOnClickListener(v -> {
+            // Prevent clicking if the data hasn't finished loading yet!
+            if (laptopName == null) {
+                showToast("Data sedang dimuat, tunggu sebentar...");
+                return;
+            }
 
-        binding.tvLaptopName.setText(laptopName);
-        binding.tvLaptopBrand.setText(brand);
-        binding.tvLaptopDescription.setText(description);
-        binding.tvLaptopPrice.setText(formattedPrice);
-        binding.tvLaptopStock.setText("Stok: " + stock);
+            // 1. Create a "Direct Buy" CartItem (Quantity = 1)
+            // We give it a dummy ID "temp_buy_now" because it isn't actually saved in the cart database!
+            CartItem directBuyItem = new CartItem(
+                    "temp_buy_now",
+                    laptopId,
+                    laptopName,
+                    laptopImageUrl,
+                    laptopPrice,
+                    1
+            );
 
-        Glide.with(this).load(laptopImageUrl).into(binding.ivLaptopImage);
+            // 2. Put it inside an ArrayList
+            java.util.ArrayList<CartItem> checkoutList = new java.util.ArrayList<>();
+            checkoutList.add(directBuyItem);
+
+            // 3. Send it directly to the Checkout screen!
+            Intent intent = new Intent(this, CheckoutActivity.class);
+            intent.putExtra("CART_ITEMS", checkoutList);
+            intent.putExtra("TOTAL_PRICE", laptopPrice); // Total price is just the price of this 1 laptop
+            startActivity(intent);
+        });
     }
 
     private void setLoadingState(boolean isLoading) {

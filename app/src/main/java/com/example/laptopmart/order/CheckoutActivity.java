@@ -10,6 +10,7 @@ import com.example.laptopmart.R;
 import com.example.laptopmart.cart.CartAdapter;
 import com.example.laptopmart.databinding.ActivityCheckoutBinding;
 import com.example.laptopmart.model.CartItem;
+import com.example.laptopmart.profile.ProfileViewModel;
 
 import java.text.NumberFormat;
 import java.util.List;
@@ -18,7 +19,8 @@ import java.util.Locale;
 public class CheckoutActivity extends AppCompatActivity {
 
     private ActivityCheckoutBinding binding;
-    private CheckoutViewModel viewModel;
+    private CheckoutViewModel checkoutViewModel;
+    private ProfileViewModel profileViewModel;
     private List<CartItem> cartItems;
     private double totalPrice;
 
@@ -28,7 +30,8 @@ public class CheckoutActivity extends AppCompatActivity {
         binding = ActivityCheckoutBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        viewModel = new ViewModelProvider(this).get(CheckoutViewModel.class);
+        checkoutViewModel = new ViewModelProvider(this).get(CheckoutViewModel.class);
+        profileViewModel = new ViewModelProvider(this).get(ProfileViewModel.class);
         cartItems = (List<CartItem>) getIntent().getSerializableExtra("CART_ITEMS");
         totalPrice = getIntent().getDoubleExtra("TOTAL_PRICE", 0.0);
 
@@ -38,9 +41,15 @@ public class CheckoutActivity extends AppCompatActivity {
     }
 
     private void observeViewModel() {
-        viewModel.getIsLoading().observe(this, this::setLoadingState);
+        profileViewModel.getUserProfileLiveData().observe(this, profile -> {
+            if (profile != null && profile.getAddress() != null && !profile.getAddress().isEmpty()) {
+                // Automatically fill in the address box so the user doesn't have to type it!
+                binding.etAddress.setText(profile.getAddress());
+            }
+        });
+        checkoutViewModel.getIsLoading().observe(this, this::setLoadingState);
 
-        viewModel.getToastMessage().observe(this, message -> {
+        checkoutViewModel.getToastMessage().observe(this, message -> {
             if (message != null) {
                 showToast(message);
                 if (message.contains("Berhasil") || message.contains("berhasil")) {
@@ -59,7 +68,7 @@ public class CheckoutActivity extends AppCompatActivity {
             }
             binding.tilAddress.setError(null);
 
-            viewModel.createOrder(address, totalPrice, cartItems);
+            checkoutViewModel.createOrder(address, totalPrice, cartItems);
         });
     }
 
