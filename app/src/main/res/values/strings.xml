@@ -26,8 +26,7 @@
     <string name="delete">Hapus</string>
     <string name="cart">Keranjang</string>
     <string name="buy">Beli</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="search">Cari</string>
     <string name="checkout">Checkout</string>
+    <string name="api_key">AIzaSyBKc_2B5eSrCrrf2727loA2HJZ60U0pnAA</string>
 </resources>

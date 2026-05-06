@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/winter_white"
-    tools:context=".cart.CartFragment">
+    tools:context=".cart.CartActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/navigation_header_container"

@@ -14,6 +14,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.LaptopMart">
         <activity
+            android:name=".profile.ProfileDetailActivity"
+            android:exported="false" />
+        <activity
+            android:name=".cart.CartActivity"
+            android:exported="false" />
+        <activity
             android:name=".order.CheckoutActivity"
             android:exported="false" />
         <activity

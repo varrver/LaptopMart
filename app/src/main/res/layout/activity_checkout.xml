@@ -71,7 +71,7 @@
                 android:layout_marginTop="8dp"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 tools:itemCount="2"
-                tools:listitem="@layout/view_holder_cart" /> <!-- Use your cart XML name here -->
+                tools:listitem="@layout/view_holder_cart" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -163,7 +163,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

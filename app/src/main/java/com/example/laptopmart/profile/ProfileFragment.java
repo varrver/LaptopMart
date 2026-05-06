@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.laptopmart.auth.LoginActivity;
+import com.example.laptopmart.cart.CartActivity;
 import com.example.laptopmart.databinding.FragmentProfileBinding;
 
 public class ProfileFragment extends Fragment {
@@ -34,17 +35,6 @@ public class ProfileFragment extends Fragment {
         viewModel.getUserProfileLiveData().observe(getViewLifecycleOwner(), profile -> {
             if (profile != null) {
                 binding.tvProfileName.setText(profile.getName());
-                binding.tvProfileEmail.setText(profile.getEmail());
-                binding.tvProfilePhone.setText(profile.getPhone());
-
-                // Capitalize the first letter of the role (e.g., "admin" -> "Admin")
-                String role = profile.getRole();
-                if (role != null && !role.isEmpty()) {
-                    String formattedRole = role.substring(0, 1).toUpperCase() + role.substring(1);
-                    binding.tvProfileRole.setText(formattedRole);
-                }
-                if (profile.getAddress() != null)
-                    binding.etProfileAddress.setText(profile.getAddress());
             }
         });
 
@@ -60,19 +50,21 @@ public class ProfileFragment extends Fragment {
     }
 
     private void initButton() {
-        binding.btnSaveAddress.setOnClickListener(v -> {
-            String address = binding.etProfileAddress.getText().toString().trim();
-            if (address.isEmpty()) {
-                showToast("Alamat tidak boleh kosong!");
-                return;
-            }
-            viewModel.updateAddress(address);
+        // 1. Edit Profile Menu
+        binding.menuEditProfile.setOnClickListener(v -> {
+            Intent intent = new Intent(requireContext(), ProfileDetailActivity.class);
+            startActivity(intent);
         });
-        binding.btnLogout.setOnClickListener(v -> {
-            // 1. Tell ViewModel to clear the Firebase session
-            viewModel.logout();
 
-            // 2. Go back to LoginActivity and clear everything else!
+        // 2. Cart Menu
+        binding.menuCart.setOnClickListener(v -> {
+            Intent intent = new Intent(requireContext(), CartActivity.class);
+            startActivity(intent);
+        });
+
+        // 3. Logout Menu
+        binding.menuLogout.setOnClickListener(v -> {
+            viewModel.logout();
             Intent intent = new Intent(requireContext(), LoginActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);

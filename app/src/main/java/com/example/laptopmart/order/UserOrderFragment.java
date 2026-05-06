@@ -10,20 +10,20 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.laptopmart.databinding.FragmentAdminOrderBinding;
+import com.example.laptopmart.databinding.FragmentOrderBinding;
 
 public class UserOrderFragment extends Fragment {
 
-    private FragmentAdminOrderBinding binding;
+    private FragmentOrderBinding binding;
     private UserOrderViewModel viewModel;
     private AdminOrderAdapter adapter;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        binding = FragmentAdminOrderBinding.inflate(inflater, container, false);
+        binding = FragmentOrderBinding.inflate(inflater, container, false);
         viewModel = new ViewModelProvider(this).get(UserOrderViewModel.class);
 
-        binding.tvTitle.setText("Riwayat Pesanan"); // Change title for the User
+        binding.tvTitle.setText("Riwayat Pesanan");
 
         setupRecyclerView();
         observeViewModel();
@@ -32,8 +32,6 @@ public class UserOrderFragment extends Fragment {
     }
 
     private void setupRecyclerView() {
-        // PASS 'false' BECAUSE THIS IS A USER, NOT AN ADMIN!
-        // We pass 'null' for the listener because users can't click the update button anyway.
         adapter = new AdminOrderAdapter(false, null);
         binding.rvAdminOrders.setAdapter(adapter);
     }

@@ -11,18 +11,18 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.laptopmart.databinding.FragmentAdminOrderBinding;
+import com.example.laptopmart.databinding.FragmentOrderBinding;
 import com.example.laptopmart.model.Order;
 
 public class AdminOrderFragment extends Fragment {
 
-    private FragmentAdminOrderBinding binding;
+    private FragmentOrderBinding binding;
     private AdminOrderViewModel viewModel;
     private AdminOrderAdapter adapter;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        binding = FragmentAdminOrderBinding.inflate(inflater, container, false);
+        binding = FragmentOrderBinding.inflate(inflater, container, false);
         viewModel = new ViewModelProvider(this).get(AdminOrderViewModel.class);
 
         setupRecyclerView();
