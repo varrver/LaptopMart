@@ -39,9 +39,6 @@ public class MainActivity extends AppCompatActivity {
             } else if (itemId == R.id.item_search) {
                 loadFragment(new SearchFragment());
                 return true;
-            } else if (itemId == R.id.item_cart) {
-                loadFragment(new CartFragment());
-                return true;
             } else if (itemId == R.id.item_orders) {
                 loadFragment(new UserOrderFragment());
                 return true;

@@ -58,6 +58,22 @@ public class ProfileViewModel extends ViewModel {
         });
     }
 
+    // Add this method
+    public void updateFullProfile(String name, String phone, String address) {
+        repository.updateFullProfile(name, phone, address, new ProfileRepository.UpdateProfileCallback() {
+            @Override
+            public void onSuccess(String message) {
+                // We can reuse our existing successMessage LiveData!
+                successMessage.setValue(message);
+            }
+
+            @Override
+            public void onError(String error) {
+                errorMessage.setValue(error);
+            }
+        });
+    }
+
     public void logout() {
         repository.logout();
     }

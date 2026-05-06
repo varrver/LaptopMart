@@ -26,6 +26,12 @@ public class ProfileRepository {
         void onError(String errorMessage);
     }
 
+    public interface UpdateProfileCallback {
+        void onSuccess(String message);
+
+        void onError(String errorMessage);
+    }
+
     public void getUserProfile(ProfileCallback callback) {
         if (auth.getCurrentUser() == null) {
             callback.onError("User belum login");
@@ -59,5 +65,20 @@ public class ProfileRepository {
                 .update("address", newAddress)
                 .addOnSuccessListener(aVoid -> callback.onSuccess("Alamat berhasil diperbarui!"))
                 .addOnFailureListener(e -> callback.onError("Gagal memperbarui alamat!"));
+    }
+
+    public void updateFullProfile(String newName, String newPhone, String newAddress, UpdateProfileCallback callback) {
+        if (auth.getCurrentUser() == null) return;
+        String userId = auth.getCurrentUser().getUid();
+
+        // Firestore lets us update multiple fields at the same time!
+        firestore.collection("users").document(userId)
+                .update(
+                        "name", newName,
+                        "phone", newPhone,
+                        "address", newAddress
+                )
+                .addOnSuccessListener(aVoid -> callback.onSuccess("Profil berhasil diperbarui!"))
+                .addOnFailureListener(e -> callback.onError("Gagal memperbarui profil!"));
     }
 }
