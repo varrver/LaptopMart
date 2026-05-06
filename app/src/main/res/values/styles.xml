@@ -21,8 +21,6 @@
         <item name="materialThemeOverlay">
             @style/ThemeOverlay.LaptopMart.TextInputLayout.OutlinedBox
         </item>
-        <item name="shapeAppearance">@style/ShapeAppearance.Material3.Corner.Full
-        </item>
     </style>
 
     <style name="Widget.LaptopMart.Button" parent="Widget.Material3.Button">
