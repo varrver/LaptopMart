@@ -51,7 +51,10 @@ public class AddEditLaptopActivity extends AppCompatActivity {
     private void initButton() {
         binding.btnPickImage.setOnClickListener(v -> imagePickerLauncher.launch("image/*"));
         binding.btnSave.setOnClickListener(v -> addLaptop());
-        binding.btnDelete.setOnClickListener(v -> viewModel.deleteLaptop(laptopId));
+        binding.btnDelete.setOnClickListener(v -> {
+            viewModel.deleteLaptop(laptopId);
+            finish();
+        });
         binding.ivBack.setOnClickListener(v -> finish());
     }
 

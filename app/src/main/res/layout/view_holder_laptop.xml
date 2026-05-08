@@ -35,8 +35,8 @@
             android:ellipsize="end"
             android:maxLines="2"
             android:textColor="@color/navy_blue"
-            android:textSize="14sp"
-            android:textStyle="normal"
+            android:textSize="16sp"
+            android:textStyle="bold"
             tools:text="Acer Nitro 5 AN515-57-58AN Gaming Laptop" />
 
         <TextView
