@@ -11,4 +11,11 @@
     <color name="sky_mist">#FFB3E7FF</color>
     <color name="minted_aqua">#FFE1F3F7</color>
     <color name="christmas_red">#FFCB312B</color>
+    <color name="slate_gray">#FF708090</color>
+    <color name="red_pigment">#FFED1C24</color>
+
+    <!-- Semantic Colors -->
+    <color name="success_green">#FF2E7D32</color>
+    <color name="warning_orange">#FFEF6C00</color>
+    <color name="info_blue">#FF1565C0</color>
 </resources>

@@ -20,6 +20,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center_vertical"
             android:orientation="horizontal">
 
             <TextView
@@ -27,14 +28,19 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:textStyle="bold"
+                android:textColor="@color/classic_french_gray"
+                android:textSize="12sp"
                 tools:text="12 Mei 2024" />
 
             <TextView
                 android:id="@+id/tv_order_status"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:background="@drawable/bg_status_pending"
+                android:paddingHorizontal="12dp"
+                android:paddingVertical="4dp"
                 android:textColor="@color/navy_blue"
+                android:textSize="12sp"
                 android:textStyle="bold"
                 tools:text="Menunggu" />
         </LinearLayout>
@@ -42,34 +48,89 @@
         <com.google.android.material.divider.MaterialDivider
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginVertical="8dp" />
+            android:layout_marginVertical="12dp"
+            app:dividerColor="@color/minted_aqua" />
 
-        <!-- CUSTOMER DETAILS -->
-        <TextView
-            android:id="@+id/tv_customer_name"
+        <!-- PRODUCT INFO -->
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            tools:text="Budi Santoso" />
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/tv_customer_address"
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="64dp"
+                android:layout_height="64dp"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="0dp"
+                app:strokeColor="@color/minted_aqua"
+                app:strokeWidth="1dp">
+
+                <ImageView
+                    android:id="@+id/iv_order_product"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:contentDescription="@string/laptop"
+                    android:scaleType="centerInside"
+                    tools:src="@tools:sample/backgrounds/scenic" />
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_order_product_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:textColor="@color/navy_blue"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    tools:text="Acer Nitro 5" />
+
+                <TextView
+                    android:id="@+id/tv_other_items"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:textColor="@color/classic_french_gray"
+                    android:textSize="12sp"
+                    tools:text="+1 item lainnya" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <!-- TOTAL PRICE ROW -->
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            tools:text="Jl. Sudirman No. 123, Jakarta" />
+            android:layout_marginTop="12dp"
+            android:gravity="bottom"
+            android:orientation="horizontal">
 
-        <!-- TOTAL PRICE -->
-        <TextView
-            android:id="@+id/tv_order_total"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:textColor="@color/navy_blue"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            tools:text="Rp 15.000.000" />
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Total Pesanan"
+                android:textColor="@color/navy_blue"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/tv_order_total"
+                style="@style/TextAppearance.LaptopMart.Price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"
+                tools:text="Rp 15.000.000" />
+        </LinearLayout>
 
         <!-- UPDATE BUTTON -->
         <com.google.android.material.button.MaterialButton
@@ -77,8 +138,10 @@
             style="@style/Widget.LaptopMart.Button.OutlinedButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:text="Update Status" />
+            android:layout_marginTop="16dp"
+            android:text="Update Status"
+            android:textSize="14sp"
+            app:strokeColor="@color/blue_ribbon" />
 
     </LinearLayout>
 

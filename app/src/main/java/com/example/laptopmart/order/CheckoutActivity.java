@@ -1,8 +1,13 @@
 package com.example.laptopmart.order;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -10,7 +15,10 @@ import com.example.laptopmart.R;
 import com.example.laptopmart.cart.CartAdapter;
 import com.example.laptopmart.databinding.ActivityCheckoutBinding;
 import com.example.laptopmart.model.CartItem;
-import com.example.laptopmart.profile.ProfileViewModel;
+import com.example.laptopmart.model.UserAddress;
+import com.example.laptopmart.profile.AddressListActivity;
+import com.example.laptopmart.profile.AddressViewModel;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import java.text.NumberFormat;
 import java.util.List;
@@ -20,9 +28,20 @@ public class CheckoutActivity extends AppCompatActivity {
 
     private ActivityCheckoutBinding binding;
     private CheckoutViewModel checkoutViewModel;
-    private ProfileViewModel profileViewModel;
+    private AddressViewModel addressViewModel;
     private List<CartItem> cartItems;
     private double totalPrice;
+    private UserAddress selectedAddress;
+
+    private final ActivityResultLauncher<Intent> addressLauncher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            result -> {
+                if (result.getResultCode() == RESULT_OK && result.getData() != null) {
+                    selectedAddress = (UserAddress) result.getData().getSerializableExtra("SELECTED_ADDRESS");
+                    updateAddressUI();
+                }
+            }
+    );
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,22 +50,32 @@ public class CheckoutActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         checkoutViewModel = new ViewModelProvider(this).get(CheckoutViewModel.class);
-        profileViewModel = new ViewModelProvider(this).get(ProfileViewModel.class);
+        addressViewModel = new ViewModelProvider(this).get(AddressViewModel.class);
+        
         cartItems = (List<CartItem>) getIntent().getSerializableExtra("CART_ITEMS");
         totalPrice = getIntent().getDoubleExtra("TOTAL_PRICE", 0.0);
-
-        observeViewModel();
-        initButton();
+        
+        setupDropdowns();
         initOrderSummary();
+        initButtons();
+        observeViewModel();
     }
 
     private void observeViewModel() {
-        profileViewModel.getUserProfileLiveData().observe(this, profile -> {
-            if (profile != null && profile.getAddress() != null && !profile.getAddress().isEmpty()) {
-                // Automatically fill in the address box so the user doesn't have to type it!
-                binding.etAddress.setText(profile.getAddress());
+        addressViewModel.getAddresses().observe(this, addresses -> {
+            if (selectedAddress == null && addresses != null && !addresses.isEmpty()) {
+                // Find default or first one
+                for (UserAddress addr : addresses) {
+                    if (addr.isDefault()) {
+                        selectedAddress = addr;
+                        break;
+                    }
+                }
+                if (selectedAddress == null) selectedAddress = addresses.get(0);
+                updateAddressUI();
             }
         });
+
         checkoutViewModel.getIsLoading().observe(this, this::setLoadingState);
 
         checkoutViewModel.getToastMessage().observe(this, message -> {
@@ -59,16 +88,71 @@ public class CheckoutActivity extends AppCompatActivity {
         });
     }
 
-    private void initButton() {
+    private void updateAddressUI() {
+        if (selectedAddress != null) {
+            binding.tvSelectedLabel.setText(selectedAddress.getLabel());
+            binding.tvSelectedReceiver.setText(selectedAddress.getReceiverName() + " | " + selectedAddress.getReceiverPhone());
+            binding.tvSelectedAddress.setText(selectedAddress.getFullAddress());
+        } else {
+            binding.tvSelectedLabel.setText("Belum ada alamat");
+            binding.tvSelectedReceiver.setText("Klik 'Pilih Lainnya' untuk menambah");
+            binding.tvSelectedAddress.setText("");
+        }
+    }
+
+    private void initButtons() {
         binding.btnCheckout.setOnClickListener(v -> {
-            String address = binding.etAddress.getText().toString().trim();
-            if (address.isEmpty()) {
-                binding.tilAddress.setError("Alamat tidak boleh kosong!");
+            if (selectedAddress == null) {
+                showToast("Harap pilih alamat pengiriman!");
                 return;
             }
-            binding.tilAddress.setError(null);
 
-            checkoutViewModel.createOrder(address, totalPrice, cartItems);
+            String addressStr = selectedAddress.getFullAddress() + " (" + selectedAddress.getReceiverName() + " - " + selectedAddress.getReceiverPhone() + ")";
+            showConfirmationDialog(addressStr);
+        });
+        
+        binding.ivBack.setOnClickListener(v -> finish());
+        
+        binding.tvChangeAddress.setOnClickListener(v -> {
+            Intent intent = new Intent(this, AddressListActivity.class);
+            intent.putExtra("EXTRA_SELECTION_MODE", true);
+            addressLauncher.launch(intent);
+        });
+    }
+
+    private void showConfirmationDialog(String address) {
+        String shipping = binding.actvShipping.getText().toString();
+        String payment = binding.actvPayment.getText().toString();
+        String bankAccount = binding.etBankAccount.getText().toString().trim();
+        String notes = binding.etNotes.getText().toString().trim();
+
+        new MaterialAlertDialogBuilder(this)
+                .setTitle("Konfirmasi Pesanan")
+                .setMessage("Apakah Anda yakin ingin membuat pesanan ini?")
+                .setPositiveButton("Ya, Pesan", (dialog, which) -> 
+                    checkoutViewModel.createOrder(address, shipping, payment, bankAccount, notes, totalPrice, cartItems))
+                .setNegativeButton("Batal", null)
+                .show();
+    }
+
+    private void setupDropdowns() {
+        String[] shippingOptions = {"Reguler", "Ekspres", "Kargo"};
+        ArrayAdapter<String> shippingAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, shippingOptions);
+        binding.actvShipping.setAdapter(shippingAdapter);
+        binding.actvShipping.setText(shippingOptions[0], false);
+
+        String[] paymentOptions = {"Transfer Bank", "E-Wallet", "COD"};
+        ArrayAdapter<String> paymentAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, paymentOptions);
+        binding.actvPayment.setAdapter(paymentAdapter);
+        binding.actvPayment.setText(paymentOptions[0], false);
+
+        binding.actvPayment.setOnItemClickListener((parent, view, position, id) -> {
+            String selected = (String) parent.getItemAtPosition(position);
+            if (selected.equalsIgnoreCase("COD")) {
+                binding.tilBankAccount.setVisibility(View.GONE);
+            } else {
+                binding.tilBankAccount.setVisibility(View.VISIBLE);
+            }
         });
     }
 
@@ -77,9 +161,7 @@ public class CheckoutActivity extends AppCompatActivity {
         binding.tvCheckoutTotal.setText(formatRupiah.format(totalPrice));
         CartAdapter adapter = new CartAdapter(new CartAdapter.OnCartClickListener() {
             @Override
-            public void onCartClick(CartItem cartItem) {
-
-            }
+            public void onCartClick(CartItem cartItem) {}
 
             @Override
             public void onPlusCLick(CartItem cartItem) {
@@ -97,11 +179,9 @@ public class CheckoutActivity extends AppCompatActivity {
     }
 
     private void setLoadingState(boolean isLoading) {
-        binding.etAddress.setEnabled(!isLoading);
         binding.btnCheckout.setEnabled(!isLoading);
-
         if (isLoading) {
-            binding.btnCheckout.setText(R.string.process); // "Proses..."
+            binding.btnCheckout.setText(R.string.process);
         } else {
             binding.btnCheckout.setText(R.string.checkout);
         }

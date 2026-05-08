@@ -17,26 +17,31 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:layout_width="match_parent"
+            android:id="@+id/tv_header"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="16dp"
+            android:layout_marginStart="16dp"
             android:layout_marginTop="48dp"
-            android:layout_marginBottom="16dp"
+            android:layout_marginBottom="8dp"
             android:text="@string/app_name"
             android:textColor="@color/navy_blue"
             android:textSize="32sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <com.google.android.material.divider.MaterialDivider
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
+        <ImageView
+            android:id="@+id/iv_search"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:layout_marginEnd="16dp"
+            android:contentDescription="@string/search"
+            android:src="@drawable/ic_search"
+            app:layout_constraintBottom_toBottomOf="@id/tv_header"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintTop_toTopOf="@id/tv_header"
+            app:tint="@color/navy_blue" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -51,31 +56,32 @@
 
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:scrollbars="none">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="16dp"
                 android:orientation="vertical">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="16dp"
                     android:layout_marginTop="16dp">
 
                     <com.google.android.material.card.MaterialCardView
-                        android:id="@+id/bannerContainer"
+                        android:id="@+id/banner_container"
                         android:layout_width="0dp"
-                        android:layout_height="168dp"
-                        app:cardCornerRadius="12dp"
+                        android:layout_height="160dp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent">
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:strokeWidth="0dp">
 
                         <androidx.viewpager2.widget.ViewPager2
-                            android:id="@+id/vpBanner"
+                            android:id="@+id/vp_banner"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent" />
 
@@ -95,11 +101,12 @@
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <TextView
+                    style="@style/TextAppearance.LaptopMart.SectionHeader"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:text="Untukmu"
-                    android:textColor="@color/navy_blue"
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_marginTop="24dp"
+                    android:text="Pilihan Terbaik"
                     android:textSize="24sp" />
 
                 <androidx.recyclerview.widget.RecyclerView
@@ -107,6 +114,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
+                    android:clipToPadding="false"
+                    android:paddingHorizontal="8dp"
+                    android:paddingBottom="16dp"
                     app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                     app:spanCount="2" />
 

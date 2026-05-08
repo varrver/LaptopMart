@@ -82,4 +82,30 @@
     <style name="ThemeOverlay.LaptopMart.MaterialDivider" parent="">
         <item name="dividerColor">@color/classic_french_gray</item>
     </style>
+
+    <!-- Marketplace Styles -->
+    <style name="TextAppearance.LaptopMart.Price" parent="TextAppearance.Material3.TitleLarge">
+        <item name="android:textColor">@color/blue_ribbon</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="TextAppearance.LaptopMart.SectionHeader" parent="TextAppearance.Material3.HeadlineSmall">
+        <item name="android:textColor">@color/navy_blue</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="Widget.LaptopMart.Header" parent="">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@color/winter_white</item>
+        <item name="android:paddingTop">48dp</item>
+        <item name="android:paddingBottom">16dp</item>
+    </style>
+
+    <style name="TextAppearance.LaptopMart.HeaderTitle" parent="TextAppearance.Material3.HeadlineMedium">
+        <item name="android:textColor">@color/navy_blue</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">28sp</item>
+    </style>
+
 </resources>

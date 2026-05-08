@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.example.laptopmart.R;
 import com.example.laptopmart.databinding.FragmentOrderBinding;
 
 public class UserOrderFragment extends Fragment {
@@ -23,7 +24,7 @@ public class UserOrderFragment extends Fragment {
         binding = FragmentOrderBinding.inflate(inflater, container, false);
         viewModel = new ViewModelProvider(this).get(UserOrderViewModel.class);
 
-        binding.tvTitle.setText("Riwayat Pesanan");
+        binding.tvHeader.setText(R.string.order_history);
 
         setupRecyclerView();
         observeViewModel();

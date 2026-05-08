@@ -28,4 +28,12 @@
     <string name="buy">Beli</string>
     <string name="search">Cari</string>
     <string name="checkout">Checkout</string>
+    <string name="back">Kembali</string>
+    <string name="add_laptop">Tambah Laptop</string>
+    <string name="search_laptop">Cari Laptop</string>
+    <string name="order_list">Daftar Pesanan</string>
+    <string name="name_or_brand">Ketik nama atau brand...</string>
+    <string name="laptop_not_found">Laptop tidak ditemukan</string>
+    <string name="order_history">Riwayat Pesanan</string>
+    <string name="order_detail">Detail Pesanan</string>
 </resources>

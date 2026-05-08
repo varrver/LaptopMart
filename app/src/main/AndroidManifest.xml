@@ -20,10 +20,19 @@
             android:name=".profile.ProfileDetailActivity"
             android:exported="false" />
         <activity
+            android:name=".profile.AddressListActivity"
+            android:exported="false" />
+        <activity
+            android:name=".profile.AddAddressActivity"
+            android:exported="false" />
+        <activity
             android:name=".cart.CartActivity"
             android:exported="false" />
         <activity
             android:name=".order.CheckoutActivity"
+            android:exported="false" />
+        <activity
+            android:name=".order.OrderDetailActivity"
             android:exported="false" />
         <activity
             android:name=".laptop.DetailLaptopActivity"

@@ -35,6 +35,24 @@ public class ProfileFragment extends Fragment {
         viewModel.getUserProfileLiveData().observe(getViewLifecycleOwner(), profile -> {
             if (profile != null) {
                 binding.tvProfileName.setText(profile.getName());
+                binding.tvProfileEmail.setText(profile.getEmail());
+
+                String role = profile.getRole();
+                if (role != null) {
+                    if (role.equalsIgnoreCase("admin")) {
+                        binding.tvProfileRole.setText("Administrator");
+                        binding.menuEditProfile.setVisibility(View.GONE);
+                        binding.menuAddress.setVisibility(View.GONE);
+                        binding.menuCart.setVisibility(View.GONE);
+                        binding.dividerCart.setVisibility(View.GONE);
+                    } else {
+                        binding.tvProfileRole.setText("Pelanggan");
+                        binding.menuEditProfile.setVisibility(View.VISIBLE);
+                        binding.menuAddress.setVisibility(View.VISIBLE);
+                        binding.menuCart.setVisibility(View.VISIBLE);
+                        binding.dividerCart.setVisibility(View.VISIBLE);
+                    }
+                }
             }
         });
 
@@ -53,6 +71,11 @@ public class ProfileFragment extends Fragment {
         // 1. Edit Profile Menu
         binding.menuEditProfile.setOnClickListener(v -> {
             Intent intent = new Intent(requireContext(), ProfileDetailActivity.class);
+            startActivity(intent);
+        });
+
+        binding.menuAddress.setOnClickListener(v -> {
+            Intent intent = new Intent(requireContext(), AddressListActivity.class);
             startActivity(intent);
         });
 

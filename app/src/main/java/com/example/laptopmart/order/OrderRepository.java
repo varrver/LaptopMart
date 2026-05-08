@@ -33,7 +33,7 @@ public class OrderRepository {
         void onError(String errorMessage);
     }
 
-    public void placeOrder(String address, double totalPrice, List<CartItem> cartItems, OrderCallback callback) {
+    public void placeOrder(String address, String shippingMethod, String paymentMethod, String bankAccount, String notes, double totalPrice, List<CartItem> cartItems, OrderCallback callback) {
         if (auth.getCurrentUser() == null) {
             callback.onError("Anda harus login terlebih dahulu");
             return;
@@ -51,6 +51,10 @@ public class OrderRepository {
                             userId,
                             customerName,
                             address,
+                            shippingMethod, // Added
+                            paymentMethod,  // Added
+                            bankAccount,
+                            notes,
                             totalPrice,
                             "Menunggu",
                             System.currentTimeMillis(),

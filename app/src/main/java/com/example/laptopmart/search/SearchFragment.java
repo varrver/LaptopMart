@@ -50,7 +50,8 @@ public class SearchFragment extends Fragment {
     private void observeViewModel() {
         viewModel.getSearchResultsLiveData().observe(getViewLifecycleOwner(), laptops -> {
             if (laptops != null) {
-                adapter.submitList(laptops); // DiffUtil will animate the search results!
+                adapter.submitList(laptops);
+                binding.layoutEmptySearch.setVisibility(laptops.isEmpty() ? View.VISIBLE : View.GONE);
             }
         });
 

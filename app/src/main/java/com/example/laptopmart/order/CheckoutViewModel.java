@@ -25,9 +25,9 @@ public class CheckoutViewModel extends ViewModel {
         return toastMessage;
     }
 
-    public void createOrder(String address, double totalPrice, List<CartItem> cartItems) {
+    public void createOrder(String address, String shippingMethod, String paymentMethod, String bankAccount, String notes, double totalPrice, List<CartItem> cartItems) {
         isLoading.setValue(true);
-        repository.placeOrder(address, totalPrice, cartItems, new OrderRepository.OrderCallback() {
+        repository.placeOrder(address, shippingMethod, paymentMethod, bankAccount, notes, totalPrice, cartItems, new OrderRepository.OrderCallback() {
             @Override
             public void onSuccess(String message) {
                 isLoading.setValue(false);

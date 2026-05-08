@@ -2,6 +2,7 @@ package com.example.laptopmart.cart;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -62,6 +63,11 @@ public class CartActivity extends AppCompatActivity {
         viewModel.getCartItemsLiveData().observe(this, cartItems -> {
             if (cartItems != null) {
                 adapter.submitList(cartItems);
+
+                boolean isEmpty = cartItems.isEmpty();
+                binding.layoutEmptyCart.setVisibility(isEmpty ? View.VISIBLE : View.GONE);
+                binding.rvCart.setVisibility(isEmpty ? View.GONE : View.VISIBLE);
+                binding.bottomCheckoutBar.setVisibility(isEmpty ? View.GONE : View.VISIBLE);
             }
         });
         viewModel.getTotalPriceLiveData().observe(this, totalPrice -> {
@@ -79,6 +85,9 @@ public class CartActivity extends AppCompatActivity {
     }
 
     private void initButton() {
+        binding.ivBack.setOnClickListener(v -> finish());
+        binding.btnStartShopping.setOnClickListener(v -> finish());
+
         binding.btnCheckout.setOnClickListener(v -> {
             List<CartItem> items = viewModel.getCartItemsLiveData().getValue();
             Double totalPrice = viewModel.getTotalPriceLiveData().getValue();

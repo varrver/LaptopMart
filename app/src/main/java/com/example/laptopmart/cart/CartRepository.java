@@ -17,18 +17,6 @@ public class CartRepository {
         firestore = FirebaseFirestore.getInstance();
     }
 
-    public interface CartCallback {
-        void onSuccess(String message);
-
-        void onError(String errorMessage);
-    }
-
-    public interface CartListCallback {
-        void onDataChange(List<CartItem> cartItems);
-
-        void onError(String errorMessage);
-    }
-
     public void addToCart(CartItem newItem, CartCallback callback) {
         if (auth.getCurrentUser() == null) {
             callback.onError("Anda harus login terlebih dahulu!");
@@ -115,5 +103,17 @@ public class CartRepository {
                 .collection("cart")
                 .document(cartItemId)
                 .delete();
+    }
+
+    public interface CartCallback {
+        void onSuccess(String message);
+
+        void onError(String errorMessage);
+    }
+
+    public interface CartListCallback {
+        void onDataChange(List<CartItem> cartItems);
+
+        void onError(String errorMessage);
     }
 }

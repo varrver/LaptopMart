@@ -6,7 +6,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import com.example.laptopmart.R;
-import com.example.laptopmart.cart.CartFragment;
 import com.example.laptopmart.databinding.ActivityMainBinding;
 import com.example.laptopmart.order.UserOrderFragment;
 import com.example.laptopmart.profile.ProfileFragment;
@@ -48,6 +47,10 @@ public class MainActivity extends AppCompatActivity {
             }
             return true;
         });
+    }
+
+    public void switchToTab(int itemId) {
+        binding.bottomNavigationBar.setSelectedItemId(itemId);
     }
 
     private void loadFragment(Fragment fragment) {

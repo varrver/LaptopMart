@@ -30,15 +30,6 @@ public class CartAdapter extends ListAdapter<CartItem, CartAdapter.CartViewHolde
                     oldItem.getImageUrl().equals(newItem.getImageUrl());
         }
     };
-
-    public interface OnCartClickListener {
-        void onCartClick(CartItem cartItem);
-
-        void onPlusCLick(CartItem cartItem);
-
-        void onMinusClick(CartItem cartItem);
-    }
-
     private final OnCartClickListener listener;
 
     public CartAdapter(OnCartClickListener listener) {
@@ -59,8 +50,16 @@ public class CartAdapter extends ListAdapter<CartItem, CartAdapter.CartViewHolde
         holder.bind(currentCartItem);
     }
 
+    public interface OnCartClickListener {
+        void onCartClick(CartItem cartItem);
+
+        void onPlusCLick(CartItem cartItem);
+
+        void onMinusClick(CartItem cartItem);
+    }
+
     class CartViewHolder extends RecyclerView.ViewHolder {
-        private ViewHolderCartBinding binding;
+        private final ViewHolderCartBinding binding;
 
         public CartViewHolder(ViewHolderCartBinding binding) {
             super(binding.getRoot());

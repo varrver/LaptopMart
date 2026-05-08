@@ -6,53 +6,58 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="8dp"
-    app:cardBackgroundColor="@color/winter_white">
+    app:cardBackgroundColor="@color/white"
+    app:cardCornerRadius="16dp"
+    app:cardElevation="4dp"
+    app:strokeWidth="0dp">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingBottom="12dp">
 
         <ImageView
             android:id="@+id/iv_laptop_image"
             android:layout_width="match_parent"
-            android:layout_height="128dp"
+            android:layout_height="140dp"
+            android:background="@color/winter_white"
             android:contentDescription="@string/laptop"
-            android:scaleType="fitCenter"
+            android:scaleType="centerInside"
             tools:src="@tools:sample/backgrounds/scenic" />
 
         <TextView
             android:id="@+id/tv_laptop_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="8dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginHorizontal="12dp"
+            android:layout_marginTop="12dp"
+            android:ellipsize="end"
+            android:maxLines="2"
             android:textColor="@color/navy_blue"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            tools:text="Acer Nitro 5" />
+            android:textSize="14sp"
+            android:textStyle="normal"
+            tools:text="Acer Nitro 5 AN515-57-58AN Gaming Laptop" />
 
         <TextView
             android:id="@+id/tv_laptop_price"
+            style="@style/TextAppearance.LaptopMart.Price"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="8dp"
+            android:layout_marginHorizontal="12dp"
             android:layout_marginTop="8dp"
-            android:textColor="@color/navy_blue"
             android:textSize="16sp"
-            android:textStyle="bold"
             tools:text="Rp 15.000.000" />
 
         <TextView
             android:id="@+id/tv_laptop_stock"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="12dp"
-            android:textColor="@color/navy_blue"
+            android:layout_marginHorizontal="12dp"
+            android:layout_marginTop="4dp"
+            android:textColor="@color/classic_french_gray"
             android:textSize="12sp"
-            tools:text="10" />
+            tools:text="Stok: 10" />
 
     </LinearLayout>
 

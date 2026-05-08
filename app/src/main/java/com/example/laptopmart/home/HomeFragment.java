@@ -14,6 +14,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.viewpager2.widget.ViewPager2;
 
+import com.example.laptopmart.R;
 import com.example.laptopmart.databinding.FragmentHomeBinding;
 import com.example.laptopmart.laptop.DetailLaptopActivity;
 import com.example.laptopmart.laptop.LaptopAdapter;
@@ -30,7 +31,7 @@ public class HomeFragment extends Fragment {
     private final Runnable sliderRunnable = new Runnable() {
         @Override
         public void run() {
-            if (binding != null && binding.vpBanner != null && binding.vpBanner.getAdapter() != null) {
+            if (binding != null && binding.vpBanner.getAdapter() != null) {
                 int currentItem = binding.vpBanner.getCurrentItem();
                 int totalItems = binding.vpBanner.getAdapter().getItemCount();
 
@@ -51,8 +52,17 @@ public class HomeFragment extends Fragment {
 
         setupRecyclerView();
         observeModel();
+        initHeader();
 
         return binding.getRoot();
+    }
+
+    private void initHeader() {
+        binding.ivSearch.setOnClickListener(v -> {
+            if (getActivity() instanceof MainActivity) {
+                ((MainActivity) getActivity()).switchToTab(R.id.item_search);
+            }
+        });
     }
 
     private void setupRecyclerView() {
