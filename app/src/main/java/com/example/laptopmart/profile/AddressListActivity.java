@@ -16,12 +16,15 @@ public class AddressListActivity extends AppCompatActivity {
     private ActivityAddressListBinding binding;
     private AddressViewModel viewModel;
     private AddressAdapter adapter;
+    private boolean isSelectionMode = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityAddressListBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        isSelectionMode = getIntent().getBooleanExtra("EXTRA_SELECTION_MODE", false);
 
         viewModel = new ViewModelProvider(this).get(AddressViewModel.class);
 
@@ -34,9 +37,14 @@ public class AddressListActivity extends AppCompatActivity {
         adapter = new AddressAdapter(new AddressAdapter.OnAddressClickListener() {
             @Override
             public void onAddressClick(UserAddress address) {
-                // If they are checking out, maybe clicking an address selects it and returns!
-                // For now, we will just show a toast.
-                Toast.makeText(AddressListActivity.this, "Alamat Dipilih: " + address.getLabel(), Toast.LENGTH_SHORT).show();
+                if (isSelectionMode) {
+                    Intent resultIntent = new Intent();
+                    resultIntent.putExtra("SELECTED_ADDRESS", address);
+                    setResult(RESULT_OK, resultIntent);
+                    finish();
+                } else {
+                    Toast.makeText(AddressListActivity.this, "Alamat Dipilih: " + address.getLabel(), Toast.LENGTH_SHORT).show();
+                }
             }
 
             @Override

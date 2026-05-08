@@ -222,7 +222,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
-                        android:hint="Nomor Rekening / E-Wallet (Opsional)"
+                        android:hint="Nomor Rekening / E-Wallet (Wajib)"
                         android:visibility="gone"
                         app:startIconDrawable="@drawable/ic_wallet">
 
@@ -271,6 +271,29 @@
             android:orientation="vertical"
             android:padding="16dp"
             app:layout_constraintBottom_toBottomOf="parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Biaya Pengiriman"
+                    android:textColor="@color/slate_gray"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/tv_shipping_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/slate_gray"
+                    android:textSize="14sp"
+                    tools:text="Rp 20.000" />
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"

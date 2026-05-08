@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.laptopmart.databinding.ActivityCartBinding;
+import com.example.laptopmart.home.MainActivity;
 import com.example.laptopmart.laptop.DetailLaptopActivity;
 import com.example.laptopmart.model.CartItem;
 import com.example.laptopmart.order.CheckoutActivity;
@@ -86,7 +87,10 @@ public class CartActivity extends AppCompatActivity {
 
     private void initButton() {
         binding.ivBack.setOnClickListener(v -> finish());
-        binding.btnStartShopping.setOnClickListener(v -> finish());
+        binding.btnStartShopping.setOnClickListener(v -> {
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
+        });
 
         binding.btnCheckout.setOnClickListener(v -> {
             List<CartItem> items = viewModel.getCartItemsLiveData().getValue();

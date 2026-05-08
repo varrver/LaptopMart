@@ -30,7 +30,8 @@ public class CheckoutActivity extends AppCompatActivity {
     private CheckoutViewModel checkoutViewModel;
     private AddressViewModel addressViewModel;
     private List<CartItem> cartItems;
-    private double totalPrice;
+    private double itemsPrice;
+    private double deliveryPrice = 20000; // Default for "Reguler"
     private UserAddress selectedAddress;
 
     private final ActivityResultLauncher<Intent> addressLauncher = registerForActivityResult(
@@ -53,7 +54,7 @@ public class CheckoutActivity extends AppCompatActivity {
         addressViewModel = new ViewModelProvider(this).get(AddressViewModel.class);
         
         cartItems = (List<CartItem>) getIntent().getSerializableExtra("CART_ITEMS");
-        totalPrice = getIntent().getDoubleExtra("TOTAL_PRICE", 0.0);
+        itemsPrice = getIntent().getDoubleExtra("TOTAL_PRICE", 0.0);
         
         setupDropdowns();
         initOrderSummary();
@@ -126,11 +127,21 @@ public class CheckoutActivity extends AppCompatActivity {
         String bankAccount = binding.etBankAccount.getText().toString().trim();
         String notes = binding.etNotes.getText().toString().trim();
 
+        if (payment.isEmpty() || payment.equalsIgnoreCase("Pilih Pembayaran")) {
+            showToast("Harap pilih metode pembayaran!");
+            return;
+        }
+
+        if (!payment.equalsIgnoreCase("COD") && bankAccount.isEmpty()) {
+            showToast("Nomor Rekening/E-Wallet wajib diisi untuk metode ini!");
+            return;
+        }
+
         new MaterialAlertDialogBuilder(this)
                 .setTitle("Konfirmasi Pesanan")
                 .setMessage("Apakah Anda yakin ingin membuat pesanan ini?")
                 .setPositiveButton("Ya, Pesan", (dialog, which) -> 
-                    checkoutViewModel.createOrder(address, shipping, payment, bankAccount, notes, totalPrice, cartItems))
+                    checkoutViewModel.createOrder(address, shipping, payment, bankAccount, notes, itemsPrice + deliveryPrice, cartItems))
                 .setNegativeButton("Batal", null)
                 .show();
     }
@@ -140,11 +151,22 @@ public class CheckoutActivity extends AppCompatActivity {
         ArrayAdapter<String> shippingAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, shippingOptions);
         binding.actvShipping.setAdapter(shippingAdapter);
         binding.actvShipping.setText(shippingOptions[0], false);
+        
+        binding.actvShipping.setOnItemClickListener((parent, view, position, id) -> {
+            String selected = (String) parent.getItemAtPosition(position);
+            switch (selected) {
+                case "Reguler": deliveryPrice = 20000; break;
+                case "Ekspres": deliveryPrice = 50000; break;
+                case "Kargo": deliveryPrice = 100000; break;
+            }
+            updateTotalDisplay();
+        });
 
         String[] paymentOptions = {"Transfer Bank", "E-Wallet", "COD"};
         ArrayAdapter<String> paymentAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, paymentOptions);
         binding.actvPayment.setAdapter(paymentAdapter);
-        binding.actvPayment.setText(paymentOptions[0], false);
+        binding.actvPayment.setText(paymentOptions[2], false); // COD is default
+        binding.tilBankAccount.setVisibility(View.GONE);
 
         binding.actvPayment.setOnItemClickListener((parent, view, position, id) -> {
             String selected = (String) parent.getItemAtPosition(position);
@@ -157,8 +179,6 @@ public class CheckoutActivity extends AppCompatActivity {
     }
 
     private void initOrderSummary() {
-        NumberFormat formatRupiah = NumberFormat.getCurrencyInstance(new Locale("id", "ID"));
-        binding.tvCheckoutTotal.setText(formatRupiah.format(totalPrice));
         CartAdapter adapter = new CartAdapter(new CartAdapter.OnCartClickListener() {
             @Override
             public void onCartClick(CartItem cartItem) {}
@@ -176,6 +196,13 @@ public class CheckoutActivity extends AppCompatActivity {
         binding.rvCheckoutItems.setAdapter(adapter);
         binding.rvCheckoutItems.setNestedScrollingEnabled(false);
         adapter.submitList(cartItems);
+        updateTotalDisplay();
+    }
+
+    private void updateTotalDisplay() {
+        NumberFormat formatRupiah = NumberFormat.getCurrencyInstance(new Locale("id", "ID"));
+        binding.tvShippingPrice.setText(formatRupiah.format(deliveryPrice));
+        binding.tvCheckoutTotal.setText(formatRupiah.format(itemsPrice + deliveryPrice));
     }
 
     private void setLoadingState(boolean isLoading) {
